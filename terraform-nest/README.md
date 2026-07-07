@@ -1,7 +1,7 @@
 # Your App — Terraform Deployment Guide
 ## AWS ALB + ASG + RDS + Secrets Manager
 
-![alt text](image-1.png)
+![architecture design](images/architecture-design.png)
 ---
 
 ## Prerequisites
@@ -9,7 +9,8 @@
 - Terraform >= 1.5 installed
 - An EC2 key pair already created in `<YOUR_AWS_REGION>`
 - Your S3 bucket `<YOUR_S3_BUCKET_NAME>` with `<YOUR_ASSETS_FOLDER>/` objects uploaded
- ![alt text](image.png)
+  
+ ![S3 bucket](images/S3_bucket_provisioning.png)
 ---
 
 ## Step 1 — Create the secret in Secrets Manager (one-time setup)
@@ -54,7 +55,8 @@ Copy the output (e.g. `ami-0abc123def456789`) into `terraform.tfvars` as `ami_id
 ---
 
 ## PROVISIONING YOUR INFRASTRUCTURE
-![alt text](image-2.png)
+
+![provisioning](images/provisioning.png)
 
 ## Step 3 — Fill in terraform.tfvars
 
@@ -166,8 +168,9 @@ aws secretsmanager delete-secret \
 
 ---
 
-## Architecture
-![alt text](image-5.png)
+## Architecture Overview
+
+![architecture overview](images/architecture_overview.png)
 
 ```
 Internet
@@ -203,7 +206,7 @@ Secrets flow:
 | SSM Session Manager | Connect to instances without port 22 open to internet |
 | S3 backend for state | Terraform state encrypted at rest, shareable with team |
 
-![alt text](image-4.png)
+![security design](images/security_design.png)
 ---
 
 ## Placeholder Reference
@@ -224,4 +227,5 @@ Secrets flow:
 
 
   ## TEST YOUR DEPLOYMENT
-![alt text](image-3.png)
+
+![Auto Scaling Test](images/testing_autoscaling.png)
