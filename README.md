@@ -1,5 +1,5 @@
-# Your App — Terraform Deployment Guide
-## AWS ALB + ASG + RDS + Secrets Manager
+# HIGH AVAILABILITY USING AUTO SCALING GROUPS AND APPLICATION LOAD BALANCER
+## AWS ALB + ASG + RDS + S3 + Secrets Manager
 
 ![architecture design](images/architecture-design.png)
 ---
