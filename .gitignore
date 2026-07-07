@@ -1,0 +1,4 @@
+.terraform/
+nest-app-keypair.pem
+terraform.tfvars
+tfplan
