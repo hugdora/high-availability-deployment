@@ -223,8 +223,8 @@ Secrets flow:
 | `<YOUR_STRONG_PASSWORD>` | Database password (min 8 chars) | `P@ssw0rd123!` |
 | `<YOUR_APP_KEY>` | Laravel APP_KEY from your `.env` | `base64:abc...` |
 
-# Documentation 
- ## Redgate Flyway https://documentation.red-gate.com/fd/command-line-277579359.html
+## Documentation 
+ Redgate Flyway https://documentation.red-gate.com/fd/command-line-277579359.html
 
 ## TEST YOUR DEPLOYMENT
 
