@@ -138,6 +138,8 @@ tail -f /tmp/nest-bootstrap.log
 
 ## Step 8 — Test auto-scaling
 
+![Auto Scaling Test](images/testing_autoscaling.png)
+
 ```bash
 # Connect to an instance via SSM, then generate CPU load:
 stress --cpu 4 --timeout 300
@@ -148,6 +150,8 @@ watch -n 10 "aws autoscaling describe-auto-scaling-groups \
   --region <YOUR_AWS_REGION> \
   --query 'AutoScalingGroups[0].Instances[*].InstanceId'"
 ```
+
+
 
 ## Architecture Overview
 
@@ -208,9 +212,6 @@ Secrets flow:
 ## Documentation 
  Redgate Flyway https://documentation.red-gate.com/fd/command-line-277579359.html
 
-## TEST YOUR DEPLOYMENT
-
-![Auto Scaling Test](images/testing_autoscaling.png)
 
 ---
 
