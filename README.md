@@ -149,24 +149,6 @@ watch -n 10 "aws autoscaling describe-auto-scaling-groups \
   --query 'AutoScalingGroups[0].Instances[*].InstanceId'"
 ```
 
----
-
-## Step 9 — Cleanup (after the demo)
-
-```bash
-terraform destroy
-```
-
-Then optionally delete the secret:
-```bash
-aws secretsmanager delete-secret \
-  --secret-id <YOUR_APP_NAME>/db-credentials \
-  --force-delete-without-recovery \
-  --region <YOUR_AWS_REGION>
-```
-
----
-
 ## Architecture Overview
 
 ![architecture overview](images/architecture_overview.png)
@@ -229,3 +211,21 @@ Secrets flow:
 ## TEST YOUR DEPLOYMENT
 
 ![Auto Scaling Test](images/testing_autoscaling.png)
+
+---
+
+## Step 9 — Cleanup (after the demo)
+
+```bash
+terraform destroy
+```
+
+Then optionally delete the secret:
+```bash
+aws secretsmanager delete-secret \
+  --secret-id <YOUR_APP_NAME>/db-credentials \
+  --force-delete-without-recovery \
+  --region <YOUR_AWS_REGION>
+```
+
+---
