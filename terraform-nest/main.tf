@@ -9,9 +9,9 @@ terraform {
 
   # State stored in your existing S3 bucket
   backend "s3" {
-    bucket  = "dev-app-dora-webfiles"
-    key     = "nest-app/terraform.tfstate"
-    region  = "eu-west-2"
+    bucket  = "<YOUR_BUCKET_NAME>"
+    key     = "<YOUR_KEY_NAME>"
+    region  = "<YOUR_REGION>"
     encrypt = true
   }
 }

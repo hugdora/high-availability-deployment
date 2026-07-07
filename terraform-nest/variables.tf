@@ -1,86 +1,128 @@
-# ── variables.tf ──────────────────────────────────────────────────────────────
-# No sensitive values here — all secrets live in AWS Secrets Manager.
+# =============================================================================
+# Terraform Variables
+# =============================================================================
+# This project deploys a highly available NestJS application on AWS.
+#
+# Copy terraform.tfvars.example to terraform.tfvars and update the values
+# before running Terraform.
+#
+# terraform.tfvars should NOT be committed to Git.
+# =============================================================================
+
+############################
+# AWS Configuration
+############################
 
 variable "aws_region" {
-  description = "AWS region for all resources"
-  default     = "eu-west-2"
+  description = "AWS region where resources will be created."
+  type        = string
+  default     = "eu-west-2" # CAN BE CHANGE
 }
 
 variable "project_name" {
-  description = "Prefix applied to every resource name"
-  default     = "nest-app"
+  description = "Prefix used when naming AWS resources."
+  type        = string
+  default     = "nest-app" # CAN BE CHANGE
 }
 
 variable "secret_name" {
-  description = "Name of the Secrets Manager secret holding db credentials and app_key"
-  default     = "nest-app/db-credentials"
+  description = "AWS Secrets Manager secret containing the application secrets."
+  type        = string
 }
 
-# ── Network ───────────────────────────────────────────────────────────────────
+############################
+# Networking
+############################
+
 variable "vpc_cidr" {
-  default = "10.0.0.0/16"
+  description = "CIDR block for the VPC."
+  type        = string
+  default     = "10.0.0.0/16" # CAN BE CHANGE
 }
 
 variable "azs" {
-  description = "Availability zones — must match the region above"
-  default     = ["eu-west-2a", "eu-west-2b"]
+  description = "Availability Zones used for the deployment."
+  type        = list(string)
+
+  default = [
+    "eu-west-2a",
+    "eu-west-2b"
+  ]
 }
 
 variable "public_subnet_cidrs" {
-  description = "CIDR blocks for public subnets (one per AZ) — ALB lives here"
-  default     = ["10.0.1.0/24", "10.0.2.0/24"]
+  description = "CIDR blocks for the public subnets."
+  type        = list(string)
+
+  default = [    
+    "10.0.1.0/24",
+    "10.0.2.0/24"
+  ]
 }
 
 variable "private_subnet_cidrs" {
-  description = "CIDR blocks for private subnets (one per AZ) — EC2 + RDS live here"
-  default     = ["10.0.11.0/24", "10.0.12.0/24"]
+  description = "CIDR blocks for the private subnets."
+  type        = list(string)
+
+  default = [   
+    "10.0.11.0/24",
+    "10.0.12.0/24"
+  ]
 }
 
-# ── EC2 / ASG ─────────────────────────────────────────────────────────────────
+############################
+# EC2 & Auto Scaling
+############################
+
 variable "ami_id" {
-  description = <<-EOT
-    Amazon Linux 2023 AMI ID for eu-west-2.
-    Run this command to get the latest:
-      aws ec2 describe-images \
-        --owners amazon \
-        --filters "Name=name,Values=al2023-ami-*-x86_64" "Name=state,Values=available" \
-        --query "sort_by(Images, &CreationDate)[-1].ImageId" \
-        --output text --region eu-west-2
-  EOT
+  description = "Amazon Linux 2023 AMI ID."
+  type        = string
 }
 
 variable "instance_type" {
-  description = "EC2 instance type for the ASG"
+  description = "EC2 instance type."
+  type        = string
   default     = "t3.small"
 }
 
 variable "key_name" {
-  description = "EC2 key pair name — used for emergency SSH access within the VPC"
+  description = "Existing EC2 Key Pair name."
+  type        = string
 }
 
 variable "asg_min_size" {
-  description = "Minimum number of EC2 instances in the ASG"
+  description = "Minimum number of instances."
+  type        = number
   default     = 1
 }
 
 variable "asg_max_size" {
-  description = "Maximum number of EC2 instances the ASG can scale to"
+  description = "Maximum number of instances."
+  type        = number
   default     = 4
 }
 
 variable "asg_desired_capacity" {
-  description = "Desired number of EC2 instances at steady state"
+  description = "Desired number of instances."
+  type        = number
   default     = 2
 }
 
-# ── Database ──────────────────────────────────────────────────────────────────
+############################
+# Database
+############################
+
 variable "db_instance_class" {
-  description = "RDS instance class"
+  description = "Amazon RDS instance class."
+  type        = string
   default     = "db.t3.micro"
 }
 
-# ── App ───────────────────────────────────────────────────────────────────────
+############################
+# Application
+############################
+
 variable "s3_bucket" {
-  description = "S3 bucket containing Project-2-assets/ (nest.zip, V1__nest.sql, AppServiceProvider.php)"
-  default     = "dev-app-dora-webfiles"
+  description = "S3 bucket containing the application deployment files."
+  type        = string
 }
